@@ -1,9 +1,10 @@
+#version 300 es
 
-attribute vec3 position;
+in vec3 position;
 
-varying vec3 colour;
+out vec4 vColor;
 
 void main() {
     gl_Position = vec4(position, 0);
-    colour = vec3(1.0, 1.0, 1.0);
+    vColor = vec4(0.5f, 0.25f, 0.75f, 1f);
 }

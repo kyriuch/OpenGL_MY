@@ -25,9 +25,7 @@ public class FirstTaskFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView textView = new TextView(getContext());
-        textView.setText("hehe");
-        GLSurfaceView glSurfaceView = new GLSurfaceView(getContext());
+        GLSurfaceView glSurfaceView = new GLSurfaceView(getActivity());
         glSurfaceView.setEGLContextClientVersion(3);
 
         glSurfaceView.setRenderer(new FirstTaskRenderer(getResources()));

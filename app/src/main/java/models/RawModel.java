@@ -15,19 +15,10 @@ public class RawModel {
         this.vertexCount = vertexCount;
     }
 
-    public int getVaoID() {
-        return vaoID;
-    }
-
-    public int getVertexCount() {
-        return vertexCount;
-    }
-
     public void draw() {
         GLES30.glBindVertexArray(vaoID);
-        GLES30.glEnableVertexAttribArray(0);
-        GLES30.glDrawElements(GLES30.GL_TRIANGLES, vertexCount, GLES30.GL_UNSIGNED_INT, 0);
-        GLES30.glDisableVertexAttribArray(0);
+        GLES30.glDrawElements(GLES30.GL_TRIANGLES, vertexCount, GLES30.GL_UNSIGNED_SHORT, 0);
+        GLES30.glBindVertexArray(0);
     }
 
 }

@@ -24,7 +24,6 @@ public abstract class ShaderProgram {
         GLES30.glAttachShader(programId, fragmentId);
         bindAttributes();
         GLES30.glLinkProgram(programId);
-        GLES30.glValidateProgram(programId);
     }
 
     public void start() {
@@ -59,9 +58,6 @@ public abstract class ShaderProgram {
 
         GLES30.glShaderSource(shaderId, shaderSource.toString());
         GLES30.glCompileShader(shaderId);
-
-        String shaderInfoLog = GLES30.glGetShaderInfoLog(shaderId);
-        Log.i("SHADER: ", shaderInfoLog);
 
         return shaderId;
     }

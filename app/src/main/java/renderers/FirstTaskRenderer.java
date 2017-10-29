@@ -33,11 +33,9 @@ public class FirstTaskRenderer extends GlobalRenderer {
                         -0.25f, 0.25f, 0f,
                         -0.25f, -0.25f, 0f,
                         0.25f, -0.25f, 0f,
-                        0.25f, 0.25f, 0f
                 },
-                new int[]{
-                        0, 1, 3,
-                        3, 1, 2
+                new short[]{
+                        0, 1, 2
                 });
 
         try {
@@ -57,5 +55,6 @@ public class FirstTaskRenderer extends GlobalRenderer {
         super.onDrawFrame(gl10);
         basicShader.start();
         rawModel.draw();
+        basicShader.stop();
     }
 }

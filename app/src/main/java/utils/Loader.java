@@ -4,7 +4,7 @@ import android.opengl.GLES30;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 
 import models.RawModel;
 
@@ -14,66 +14,61 @@ import models.RawModel;
 
 public class Loader {
 
-    public RawModel loadToVAO(float positions[], int indices[]) {
-        int vaoId = createVAO();
-        int vbos[] = createVBO();
-        storeDataInVBO(vbos[0], positions);
-        storeIndicesInVBO(vbos[1], indices);
-        unbindVAO();
-        return new RawModel(vaoId, positions.length / 3);
+    public RawModel loadToVAO(float positions[], short indices[]) {
+        int vbos[] = createVBO(positions, indices);
+        int vaoId = createVAO(vbos);
+        return new RawModel(vaoId, indices.length);
     }
 
-    private int createVAO() {
+    private int createVAO(int[] vbos) {
         int[] vao = new int[1];
 
         GLES30.glGenVertexArrays(1, vao, 0);
         GLES30.glBindVertexArray(vao[0]);
 
+        GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, vbos[0]);
+        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, vbos[1]);
+
+        GLES30.glEnableVertexAttribArray(0);
+        GLES30.glVertexAttribPointer(0, 3, GLES30.GL_FLOAT, false, 4 * 3, 0);
+
+        GLES30.glBindVertexArray(0);
+
         return vao[0];
     }
 
-    private int[] createVBO() {
+    private int[] createVBO(float[] positions, short[] indices) {
         int[] vbos = new int[2];
 
         GLES30.glGenBuffers(2, vbos, 0);
 
+        FloatBuffer floatBuffer = getFloatBufferFromData(positions);
+        ShortBuffer shortBuffer = getShortBufferFromData(indices);
+
+        GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, vbos[0]);
+        GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, positions.length * 4, floatBuffer, GLES30.GL_STATIC_DRAW);
+
+        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, vbos[1]);
+        GLES30.glBufferData(GLES30.GL_ELEMENT_ARRAY_BUFFER, indices.length * 2, shortBuffer, GLES30.GL_STATIC_DRAW);
+
         return vbos;
-    }
-
-    private void storeDataInVBO(int vbo, float[] data) {
-        GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, vbo);
-        FloatBuffer dataBuffer = getFloatBufferFromData(data);
-        GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, dataBuffer.capacity(), dataBuffer, GLES30.GL_STATIC_DRAW);
-        GLES30.glVertexAttribPointer(vbo, 3, GLES30.GL_FLOAT, false, 0, 0);
-        GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, 0);
-    }
-
-    private void storeIndicesInVBO(int vbo, int[] data) {
-        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, vbo);
-        IntBuffer dataBuffer = getIntBufferFromData(data);
-        GLES30.glBufferData(GLES30.GL_ELEMENT_ARRAY_BUFFER, dataBuffer.capacity(), dataBuffer, GLES30.GL_STATIC_DRAW);
-        GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-
-    private void unbindVAO() {
-        GLES30.glBindVertexArray(0);
     }
 
     private FloatBuffer getFloatBufferFromData(float[] data) {
         FloatBuffer floatBuffer = ByteBuffer.allocateDirect(data.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
 
         floatBuffer.put(data);
-        floatBuffer.flip();
+        floatBuffer.position(0);
 
         return floatBuffer;
     }
 
-    private IntBuffer getIntBufferFromData(int[] data) {
-        IntBuffer intBuffer = ByteBuffer.allocateDirect(data.length * 4).order(ByteOrder.nativeOrder()).asIntBuffer();
+    private ShortBuffer getShortBufferFromData(short[] data) {
+        ShortBuffer shortBuffer = ByteBuffer.allocateDirect(data.length * 4).order(ByteOrder.nativeOrder()).asShortBuffer();
 
-        intBuffer.put(data);
-        intBuffer.flip();
+        shortBuffer.put(data);
+        shortBuffer.position(0);
 
-        return intBuffer;
+        return shortBuffer;
     }
 }
