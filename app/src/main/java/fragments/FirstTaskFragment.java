@@ -26,7 +26,7 @@ public class FirstTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         GLSurfaceView glSurfaceView = new GLSurfaceView(getActivity());
-        glSurfaceView.setEGLContextClientVersion(3);
+        glSurfaceView.setEGLContextClientVersion(2);
 
         glSurfaceView.setRenderer(new FirstTaskRenderer(getResources()));
 

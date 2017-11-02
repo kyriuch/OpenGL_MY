@@ -12,8 +12,8 @@ public class BasicShader extends ShaderProgram {
         super(vertexStream, fragmentStream);
     }
 
-    @Override
+/*    @Override
     protected void bindAttributes() {
         super.bindAttribute(0, "position");
-    }
+    }*/
 }

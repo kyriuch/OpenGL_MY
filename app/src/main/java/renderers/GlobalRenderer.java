@@ -22,7 +22,7 @@ public abstract class GlobalRenderer implements Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
-        GLES30.glClearColor(1f, 1f, 1f, 1f);
+        GLES30.glClearColor(0f, 0f, 0f, 1f);
     }
 
     @Override
@@ -32,6 +32,6 @@ public abstract class GlobalRenderer implements Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl10) {
-        GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT);
+        GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT | GLES30.GL_DEPTH_BUFFER_BIT);
     }
 }

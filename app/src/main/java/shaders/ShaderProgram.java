@@ -22,7 +22,7 @@ public abstract class ShaderProgram {
 
         GLES30.glAttachShader(programId, vertexId);
         GLES30.glAttachShader(programId, fragmentId);
-        bindAttributes();
+        //();
         GLES30.glLinkProgram(programId);
     }
 
@@ -34,12 +34,12 @@ public abstract class ShaderProgram {
         GLES30.glUseProgram(0);
     }
 
-    protected abstract void bindAttributes();
+/*    protected abstract void bindAttributes();
 
     protected void bindAttribute(int attribute, String variableName)
     {
         GLES30.glBindAttribLocation(programId, attribute, variableName);
-    }
+    }*/
 
     private static int loadShader(InputStream stream, int type) throws IOException {
         StringBuilder shaderSource = new StringBuilder();

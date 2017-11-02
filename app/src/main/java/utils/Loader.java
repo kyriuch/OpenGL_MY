@@ -25,12 +25,13 @@ public class Loader {
 
         GLES30.glGenVertexArrays(1, vao, 0);
         GLES30.glBindVertexArray(vao[0]);
+        System.out.println("VAO " + vao[0]);
 
         GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, vbos[0]);
         GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, vbos[1]);
 
         GLES30.glEnableVertexAttribArray(0);
-        GLES30.glVertexAttribPointer(0, 3, GLES30.GL_FLOAT, false, 4 * 3, 0);
+        GLES30.glVertexAttribPointer(0, 3, GLES30.GL_FLOAT, false, 0, 0);
 
         GLES30.glBindVertexArray(0);
 
@@ -41,15 +42,17 @@ public class Loader {
         int[] vbos = new int[2];
 
         GLES30.glGenBuffers(2, vbos, 0);
+        System.out.println("VBO0 " + vbos[0]);
+        System.out.println("VBO1 " + vbos[1]);
 
         FloatBuffer floatBuffer = getFloatBufferFromData(positions);
         ShortBuffer shortBuffer = getShortBufferFromData(indices);
 
         GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, vbos[0]);
-        GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, positions.length * 4, floatBuffer, GLES30.GL_STATIC_DRAW);
+        GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, floatBuffer.capacity() * 4, floatBuffer, GLES30.GL_STATIC_DRAW);
 
         GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, vbos[1]);
-        GLES30.glBufferData(GLES30.GL_ELEMENT_ARRAY_BUFFER, indices.length * 2, shortBuffer, GLES30.GL_STATIC_DRAW);
+        GLES30.glBufferData(GLES30.GL_ELEMENT_ARRAY_BUFFER, shortBuffer.capacity() * 2, shortBuffer, GLES30.GL_STATIC_DRAW);
 
         return vbos;
     }
@@ -64,7 +67,7 @@ public class Loader {
     }
 
     private ShortBuffer getShortBufferFromData(short[] data) {
-        ShortBuffer shortBuffer = ByteBuffer.allocateDirect(data.length * 4).order(ByteOrder.nativeOrder()).asShortBuffer();
+        ShortBuffer shortBuffer = ByteBuffer.allocateDirect(data.length * 2).order(ByteOrder.nativeOrder()).asShortBuffer();
 
         shortBuffer.put(data);
         shortBuffer.position(0);
