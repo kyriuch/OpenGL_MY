@@ -9,20 +9,17 @@ import javax.microedition.khronos.opengles.GL10;
 
 import utils.Loader;
 
-
 public abstract class GlobalRenderer implements Renderer {
 
-    Loader loader;
-    Resources resources;
+    final Loader loader = new Loader();
+    public static Resources resources;
 
-    public GlobalRenderer(Resources resources){
-        this.resources = resources;
-        this.loader = new Loader();
+    GlobalRenderer(){
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
-        GLES30.glClearColor(0f, 0f, 0f, 1f);
+        GLES30.glClearColor(1f, 1f, 1f, 1f);
     }
 
     @Override

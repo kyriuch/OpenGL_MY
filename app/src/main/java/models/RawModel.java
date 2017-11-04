@@ -2,10 +2,6 @@ package models;
 
 import android.opengl.GLES30;
 
-/**
- * Created by Tomek on 28.10.2017.
- */
-
 public class RawModel {
     private int vaoID;
     private int vertexCount;

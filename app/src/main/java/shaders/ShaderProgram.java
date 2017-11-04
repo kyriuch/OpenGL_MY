@@ -12,12 +12,10 @@ import java.io.InputStreamReader;
 public abstract class ShaderProgram {
 
     private int programId;
-    private int vertexId;
-    private int fragmentId;
 
-    public ShaderProgram(InputStream vertexStream, InputStream fragmentStream) throws IOException {
-        vertexId = loadShader(vertexStream, GLES30.GL_VERTEX_SHADER);
-        fragmentId = loadShader(fragmentStream, GLES30.GL_FRAGMENT_SHADER);
+    ShaderProgram(InputStream vertexStream, InputStream fragmentStream) throws IOException {
+        int vertexId = loadShader(vertexStream, GLES30.GL_VERTEX_SHADER);
+        int fragmentId = loadShader(fragmentStream, GLES30.GL_FRAGMENT_SHADER);
         programId = GLES30.glCreateProgram();
 
         GLES30.glAttachShader(programId, vertexId);
@@ -34,12 +32,12 @@ public abstract class ShaderProgram {
         GLES30.glUseProgram(0);
     }
 
-/*    protected abstract void bindAttributes();
+    protected abstract void bindAttributes();
 
-    protected void bindAttribute(int attribute, String variableName)
+    void bindAttribute(int attribute, String variableName)
     {
         GLES30.glBindAttribLocation(programId, attribute, variableName);
-    }*/
+    }
 
     private static int loadShader(InputStream stream, int type) throws IOException {
         StringBuilder shaderSource = new StringBuilder();

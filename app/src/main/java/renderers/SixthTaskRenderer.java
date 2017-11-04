@@ -10,12 +10,12 @@ import javax.microedition.khronos.opengles.GL10;
 import models.RawModel;
 import shaders.BasicShader;
 
-public class FirstTaskRenderer extends GlobalRenderer {
+public class SixthTaskRenderer extends GlobalRenderer {
 
     private RawModel triangle;
     private BasicShader basicShader;
 
-    public FirstTaskRenderer() {
+    public SixthTaskRenderer() {
     }
 
     @Override
@@ -36,7 +36,6 @@ public class FirstTaskRenderer extends GlobalRenderer {
                 new short[]{
                         0, 1, 2,
                 });
-
     }
 
     @Override
@@ -49,6 +48,5 @@ public class FirstTaskRenderer extends GlobalRenderer {
         super.onDrawFrame(gl10);
         basicShader.start();
         triangle.draw();
-        basicShader.stop();
     }
 }

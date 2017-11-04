@@ -8,10 +8,6 @@ import java.nio.ShortBuffer;
 
 import models.RawModel;
 
-/**
- * Created by Tomek on 28.10.2017.
- */
-
 public class Loader {
 
     public RawModel loadToVAO(float positions[], short indices[]) {
