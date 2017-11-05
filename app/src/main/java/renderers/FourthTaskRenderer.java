@@ -48,5 +48,6 @@ public class FourthTaskRenderer extends GlobalRenderer {
         super.onDrawFrame(gl10);
         basicShader.start();
         triangle.draw();
+        basicShader.stop();
     }
 }

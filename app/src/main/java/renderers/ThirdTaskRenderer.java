@@ -1,5 +1,7 @@
 package renderers;
 
+import android.opengl.GLES30;
+
 import com.example.tomek.opengl.R;
 
 import java.io.IOException;
@@ -7,13 +9,13 @@ import java.io.IOException;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import models.RawModel;
-import shaders.BasicShader;
+import models.TexturedModel;
+import shaders.TextureShader;
 
 public class ThirdTaskRenderer extends GlobalRenderer {
 
-    private RawModel triangle;
-    private BasicShader basicShader;
+    private TexturedModel quad;
+    private TextureShader textureShader;
 
     public ThirdTaskRenderer() {
     }
@@ -23,19 +25,36 @@ public class ThirdTaskRenderer extends GlobalRenderer {
         super.onSurfaceCreated(gl10, eglConfig);
 
         try {
-            basicShader = new BasicShader(resources.openRawResource(R.raw.basicvertexshader), resources.openRawResource(R.raw.basicfragmentshader));
+            textureShader = new TextureShader(resources.openRawResource(R.raw.texturedvertexshader), resources.openRawResource(R.raw.texturedfragmentshader));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        triangle = loader.loadToVAO(new float[]{
+        quad = loader.loadToVAO(new float[]{
                         -0.25f, 0.25f, 0f,
                         -0.25f, -0.25f, 0f,
                         0.25f, -0.25f, 0f,
+                        0.25f, 0.25f, 0f
+                },
+                new float[]{
+                        1f, 1f, 1f,
+                        1f, 1f, 1f,
+                        1f, 1f, 1f,
+                        1f, 1f, 1f
+                },
+                new float[] {
+                        0f, 0f,
+                        0f, 1f,
+                        1f, 1f,
+                        1f, 0f
                 },
                 new short[]{
                         0, 1, 2,
-                });
+                        2, 3, 0
+                }, loader.loadTexture(resources, R.drawable.picture));
+
+        GLES30.glEnable(GLES30.GL_BLEND);
+        GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA);
     }
 
     @Override
@@ -46,7 +65,8 @@ public class ThirdTaskRenderer extends GlobalRenderer {
     @Override
     public void onDrawFrame(GL10 gl10) {
         super.onDrawFrame(gl10);
-        basicShader.start();
-        triangle.draw();
+        textureShader.start();
+        quad.draw();
+        textureShader.stop();
     }
 }

@@ -12,7 +12,7 @@ import shaders.BasicShader;
 
 public class SecondTaskRenderer extends GlobalRenderer {
 
-    private RawModel triangle;
+    private RawModel quad;
     private BasicShader basicShader;
 
     public SecondTaskRenderer(){
@@ -28,13 +28,21 @@ public class SecondTaskRenderer extends GlobalRenderer {
             e.printStackTrace();
         }
 
-        triangle = loader.loadToVAO(new float[]{
+        quad = loader.loadToVAO(new float[]{
                         -0.25f, 0.25f, 0f,
                         -0.25f, -0.25f, 0f,
                         0.25f, -0.25f, 0f,
+                        0.25f, 0.25f, 0f
+                },
+                new float[]{
+                        1f, 0f, 0f,
+                        0f, 1f, 0f,
+                        1f, 0f, 0f,
+                        0f, 0f, 1f
                 },
                 new short[]{
                         0, 1, 2,
+                        2, 3, 0
                 });
     }
 
@@ -47,6 +55,7 @@ public class SecondTaskRenderer extends GlobalRenderer {
     public void onDrawFrame(GL10 gl10) {
         super.onDrawFrame(gl10);
         basicShader.start();
-        triangle.draw();
+        quad.draw();
+        basicShader.stop();
     }
 }

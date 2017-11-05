@@ -1,10 +1,8 @@
 package shaders;
 
 import android.opengl.GLES30;
-import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,7 +18,7 @@ public abstract class ShaderProgram {
 
         GLES30.glAttachShader(programId, vertexId);
         GLES30.glAttachShader(programId, fragmentId);
-        //();
+        bindAttributes();
         GLES30.glLinkProgram(programId);
     }
 

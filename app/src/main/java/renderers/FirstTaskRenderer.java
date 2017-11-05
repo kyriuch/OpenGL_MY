@@ -29,9 +29,14 @@ public class FirstTaskRenderer extends GlobalRenderer {
         }
 
         triangle = loader.loadToVAO(new float[]{
-                        -0.25f, 0.25f, 0f,
+                        0f, 0.25f, 0f,
                         -0.25f, -0.25f, 0f,
                         0.25f, -0.25f, 0f,
+                },
+                new float[]{
+                        1f, 0f, 0f,
+                        0f, 1f, 0f,
+                        0f, 0f, 1f
                 },
                 new short[]{
                         0, 1, 2,

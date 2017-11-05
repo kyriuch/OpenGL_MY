@@ -1,8 +1,10 @@
 #version 300 es
 precision mediump float;
 
-out vec4 outColor;
+in vec3 vertexColor;
+
+out vec4 fragmentColor;
 
 void main() {
-    outColor = vec4(0.5, 0.25, 0.1, 1);
+    fragmentColor = vec4(vertexColor, 1);
 }
