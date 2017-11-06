@@ -3,12 +3,12 @@ package shaders;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MvpShader extends ShaderProgram {
+public class TextureMvpShader extends ShaderProgram {
 
     private int mvpMatrixLocation;
     private int transformationMatrixLocation;
 
-    public MvpShader(InputStream vertexStream, InputStream fragmentStream) throws IOException {
+    public TextureMvpShader(InputStream vertexStream, InputStream fragmentStream) throws IOException {
         super(vertexStream, fragmentStream);
     }
 
@@ -16,6 +16,7 @@ public class MvpShader extends ShaderProgram {
     protected void bindAttributes() {
         super.bindAttribute(0, "inPosition");
         super.bindAttribute(1, "inColor");
+        super.bindAttribute(2, "inTexPosition");
     }
 
     @Override

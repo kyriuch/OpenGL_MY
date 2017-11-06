@@ -35,6 +35,14 @@ public class Loader {
         return loadToVAO(positions, colors, indices);
     }
 
+    public TexturedModel loadToVAO(float[] positions, float[] colors, float[] texturePositions, int textureId) {
+        int vaoId = createVAO();
+        createVBOs(positions, colors, texturePositions);
+        GLES30.glBindVertexArray(0);
+
+        return new TexturedModel(vaoId, positions.length / 3, textureId);
+    }
+
     public TexturedModel loadToVAO(float[] positions, float[] colors, float[] texturePositions, short[] indices, int textureId) {
         int vaoId = createVAO();
         createVBOs(positions, colors, texturePositions, indices);
@@ -96,6 +104,28 @@ public class Loader {
 
         GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, vbos[3]);
         GLES30.glBufferData(GLES30.GL_ELEMENT_ARRAY_BUFFER, indicesBuffer.capacity() * 2, indicesBuffer, GLES30.GL_STATIC_DRAW);
+    }
+
+    private void createVBOs(float[] positions, float[] colors, float[] texturePositions) {
+        int[] vbos = new int[3];
+
+        GLES30.glGenBuffers(3, vbos, 0);
+
+        FloatBuffer positionsBuffer = getFloatBufferFromData(positions);
+        FloatBuffer colorsBuffer = getFloatBufferFromData(colors);
+        FloatBuffer texturePositionsBuffer = getFloatBufferFromData(texturePositions);
+
+        bindAndStoreDataInBuffer(GLES30.GL_ARRAY_BUFFER, vbos[0], 0, positionsBuffer, 4, 3, 4 * 3);
+
+        GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, 0);
+
+        bindAndStoreDataInBuffer(GLES30.GL_ARRAY_BUFFER, vbos[1], 1, colorsBuffer, 4, 3, 4 * 3);
+
+        GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, 0);
+
+        bindAndStoreDataInBuffer(GLES30.GL_ARRAY_BUFFER, vbos[2], 2, texturePositionsBuffer, 4, 2, 4 * 2);
+
+        GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, 0);
     }
 
     private void bindAndStoreDataInBuffer(int bufferType, int vbo, int attributePosition, Buffer dataBuffer, int typeSize, int dataSize, int stride) {

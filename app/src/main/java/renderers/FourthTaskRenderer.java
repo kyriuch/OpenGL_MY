@@ -20,6 +20,10 @@ public class FourthTaskRenderer extends GlobalRenderer {
 
     private float[] projectionMatrix;
     private float[] viewMatrix;
+    private float[] transformationMatrix;
+
+    private float deltaTime;
+    private long lastTime;
 
     public FourthTaskRenderer() {
     }
@@ -28,10 +32,12 @@ public class FourthTaskRenderer extends GlobalRenderer {
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
         super.onSurfaceCreated(gl10, eglConfig);
 
-        //GLES30.glEnable(GLES30.GL_CULL_FACE);
         GLES30.glEnable(GLES30.GL_DEPTH_TEST);
         projectionMatrix = new float[16];
         viewMatrix = new float[16];
+        transformationMatrix = new float[16];
+
+        lastTime = System.currentTimeMillis();
 
         try {
             mvpShader = new MvpShader(resources.openRawResource(R.raw.mvpvertexshader), resources.openRawResource(R.raw.basicfragmentshader));
@@ -74,6 +80,8 @@ public class FourthTaskRenderer extends GlobalRenderer {
                         6, 7, 4
                 });
 
+        Matrix.setLookAtM(viewMatrix, 0, 2, 2, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.setIdentityM(transformationMatrix, 0);
     }
 
     @Override
@@ -88,9 +96,12 @@ public class FourthTaskRenderer extends GlobalRenderer {
     @Override
     public void onDrawFrame(GL10 gl10) {
         super.onDrawFrame(gl10);
+        deltaTime = (System.currentTimeMillis() - lastTime) / 1000.0f;
+        lastTime = System.currentTimeMillis();
         mvpShader.start();
-        Matrix.setLookAtM(viewMatrix, 0, 2, 2, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.rotateM(transformationMatrix, 0, 90f * deltaTime, 0f, 0f, -0.25f);
         mvpShader.loadMvpMatrix(projectionMatrix, viewMatrix);
+        mvpShader.loadTransformationMatrix(transformationMatrix);
         cube.draw();
         mvpShader.stop();
     }

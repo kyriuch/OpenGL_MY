@@ -13,7 +13,12 @@ public class TexturedModel {
         this.textureId = textureId;
     }
 
-    public void draw() {
+    public TexturedModel(int vaoId, int textureId) {
+        this.vaoId = vaoId;
+        this.textureId = textureId;
+    }
+
+    public void drawElements() {
         GLES30.glBindVertexArray(vaoId);
         GLES30.glEnableVertexAttribArray(0);
         GLES30.glEnableVertexAttribArray(1);
@@ -26,5 +31,20 @@ public class TexturedModel {
         GLES30.glDisableVertexAttribArray(2);
         GLES30.glBindVertexArray(0);
     }
+
+    public void drawTriangles() {
+        GLES30.glBindVertexArray(vaoId);
+        GLES30.glEnableVertexAttribArray(0);
+        GLES30.glEnableVertexAttribArray(1);
+        GLES30.glEnableVertexAttribArray(2);
+        GLES30.glActiveTexture(GLES30.GL_TEXTURE0);
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textureId);
+        GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vertexCount);
+        GLES30.glDisableVertexAttribArray(0);
+        GLES30.glDisableVertexAttribArray(1);
+        GLES30.glDisableVertexAttribArray(2);
+        GLES30.glBindVertexArray(0);
+    }
+
 
 }

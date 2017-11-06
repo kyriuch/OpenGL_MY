@@ -83,7 +83,11 @@ public abstract class ShaderProgram {
         GLES30.glUniform1f(location, toLoad);
     }
 
-    void loadMatrix(int location, float[] projectionMatrix, float[] viewMatrix) {
+    void loadTransformationMatrix(int location, float[] matrix) {
+        GLES30.glUniformMatrix4fv(location, 1, false, matrix, 0);
+    }
+
+    void loadMvpmatrix(int location, float[] projectionMatrix, float[] viewMatrix) {
         float[] MVPMatrix = new float[16];
 
         Matrix.multiplyMM(MVPMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
