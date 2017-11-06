@@ -14,4 +14,9 @@ public class TextureShader extends ShaderProgram {
         super.bindAttribute(1, "inColor");
         super.bindAttribute(2, "inTexPosition");
     }
+
+    @Override
+    protected void getAllUniformLocations() {
+
+    }
 }

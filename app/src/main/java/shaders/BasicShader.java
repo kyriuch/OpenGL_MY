@@ -13,4 +13,9 @@ public class BasicShader extends ShaderProgram {
         super.bindAttribute(0, "inPosition");
         super.bindAttribute(1, "inColor");
     }
+
+    @Override
+    protected void getAllUniformLocations() {
+
+    }
 }

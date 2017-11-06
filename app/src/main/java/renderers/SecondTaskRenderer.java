@@ -15,7 +15,7 @@ public class SecondTaskRenderer extends GlobalRenderer {
     private RawModel quad;
     private BasicShader basicShader;
 
-    public SecondTaskRenderer(){
+    public SecondTaskRenderer() {
     }
 
     @Override
