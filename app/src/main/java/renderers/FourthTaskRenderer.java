@@ -28,8 +28,8 @@ public class FourthTaskRenderer extends GlobalRenderer {
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
         super.onSurfaceCreated(gl10, eglConfig);
 
-        GLES30.glEnable(GLES30.GL_CULL_FACE);
-
+        //GLES30.glEnable(GLES30.GL_CULL_FACE);
+        GLES30.glEnable(GLES30.GL_DEPTH_TEST);
         projectionMatrix = new float[16];
         viewMatrix = new float[16];
 
@@ -74,8 +74,6 @@ public class FourthTaskRenderer extends GlobalRenderer {
                         6, 7, 4
                 });
 
-        GLES30.glEnable(GLES30.GL_BLEND);
-        GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA);
     }
 
     @Override
